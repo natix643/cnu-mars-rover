@@ -6,6 +6,7 @@ import spock.lang.Unroll
 
 class MainTest extends Specification {
 
+
     @Unroll
     "application should start"() {
         when:
