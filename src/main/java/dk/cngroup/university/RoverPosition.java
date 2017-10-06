@@ -16,4 +16,20 @@ public class RoverPosition {
     public int getY() {
         return y;
     }
+
+    public boolean isInsideLandscape(int landscapeWidth) {
+        if (this.getX() < 0
+                || this.getY() < 0) {
+            return false;
+        }
+
+        if (this.getX() >= landscapeWidth) {
+            return false;
+        }
+        if (this.getY() >= landscapeWidth) {
+            return false;
+        }
+
+        return true;
+    }
 }

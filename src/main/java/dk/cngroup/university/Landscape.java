@@ -40,20 +40,11 @@ public class Landscape {
     }
 
     public boolean isFieldAccessible(RoverPosition pos) {
-        if (pos.getX() < 0
-                || pos.getY() < 0) {
-            return false;
-        }
-
-        if (pos.getX() >= landscape.length) {
-            return false;
-        }
-        if (pos.getY() >= landscape.length) {
+        if (!pos.isInsideLandscape(landscape.length)) {
             return false;
         }
 
         Field field = landscape[pos.getX()][pos.getY()];
-
         return field == Field.ACCESSIBLE;
     }
 }
