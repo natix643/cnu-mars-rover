@@ -28,7 +28,7 @@ you should see historical commits from the training.
 
 ## How to use GIT in IDEA
 
-1 . When your project is linked to a GIT repository, every time you make a change to a file, you can see that the color of it's filename changes to blue.
+1. When your project is linked to a GIT repository, every time you make a change to a file, you can see that the color of it's filename changes to blue.
 You can also see that the new files have green color. This marks that these files contain some changes.
 2. If you want to commit some changes (e.g. after you wrote a new test or a new functionality) you can commit it by pressing CTRL+K. A new
 window will appear, where you can review the changes and write some message about the changes, so you can easily identify it in the future.
