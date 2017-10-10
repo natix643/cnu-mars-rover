@@ -12,7 +12,7 @@ The Simulator takes following inputs:
  - Landscape _size_ (rectangular)
  - Landscape matrix, with both ACCESSIBLE and INACCESSIBLE fields
  - Rover final position
- - Sequence of Commands for passage through the Landscape
+ - Sequence of Commands for passage through the Landscape (R-turn right, L-turn left, F-move forward, B-move backward)
 
 The Simulator output is either TRUE/FALSE, based on the fact, if the Rover reaches its final destination ;-)
 
@@ -42,7 +42,7 @@ N
 
 2,4
 
-PPFLFPFF
+RRFLFRFF
 ```
 
 The same input with notes:
@@ -61,7 +61,7 @@ N <- initial direction
 <empty line>
 2,4 <- final destination
 <empty line>
-PPFLFPFF <- sequence of commands
+RRFLFRFF <- sequence of commands
 ```
 
 ## Example input with output FALSE
@@ -81,7 +81,7 @@ N
 
 2,4
 
-PPFLFPFF
+RRFLFRFF
 ```
 
 ## Bonus
