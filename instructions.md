@@ -10,7 +10,7 @@ The Simulator takes following inputs:
  - Rover initial position
  - Rover initial direction
  - Landscape _size_ (rectangular)
- - Landscape matrix, with both ACCESSIBLE and INACCESSIBLE fields
+ - Landscape matrix, with both ACCESSIBLE (`.`) and INACCESSIBLE fields (`0`)
  - Rover final position
  - Sequence of Commands for passage through the Landscape (R-turn right, L-turn left, F-move forward, B-move backward)
 
@@ -18,7 +18,7 @@ The Simulator output is either TRUE/FALSE, based on the fact, if the Rover reach
 
 ## Assumptions
  - we do not expect you to load the data from a file, you can use the TDD approach and simulate the input with a String
- - Coordinates [0, 0] are top-left at the map
+ - Coordinates [0, 0] are top-left at the map. X is the vertical axis, Y is the horizontal one.
  - each information is separated by an empty line
  - both initial and final destination are not at an INACCESSIBLE field
  - you use the TDD approach, we've taught you
@@ -40,7 +40,7 @@ N
 .0...
 .....
 
-2,4
+4,0
 
 RRFLFRFF
 ```
@@ -59,7 +59,7 @@ N <- initial direction
 .0...
 ..... <- landscape
 <empty line>
-2,4 <- final destination
+4,0 <- final destination
 <empty line>
 RRFLFRFF <- sequence of commands
 ```
@@ -79,7 +79,7 @@ N
 .....
 .....
 
-2,4
+2,3
 
 RRFLFRFF
 ```
