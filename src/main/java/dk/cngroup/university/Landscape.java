@@ -1,5 +1,7 @@
 package dk.cngroup.university;
 
+import java.util.Arrays;
+
 public class Landscape {
 
     private final Field[][] fields;
@@ -33,6 +35,24 @@ public class Landscape {
 
         Field field = fields[pos.getX()][pos.getY()];
         return field == Field.ACCESSIBLE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Landscape)) {
+            return false;
+        }
+
+        Landscape that = (Landscape) o;
+        return Arrays.deepEquals(this.fields, that.fields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(fields);
     }
 
     @Override

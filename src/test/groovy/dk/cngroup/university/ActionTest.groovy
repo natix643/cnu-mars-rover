@@ -8,7 +8,7 @@ import static dk.cngroup.university.Action.*
 class ActionTest extends Specification {
 
     @Unroll
-    "should parse #symbol to #action"() {
+    "should parse '#symbol' to #action"() {
         expect:
         Action.parse(symbol) == action
 

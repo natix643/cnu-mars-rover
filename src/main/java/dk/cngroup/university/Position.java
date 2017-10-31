@@ -1,5 +1,7 @@
 package dk.cngroup.university;
 
+import java.util.Objects;
+
 public class Position {
     private final int x;
     private final int y;
@@ -43,5 +45,29 @@ public class Position {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Position)) {
+            return false;
+        }
+
+        Position that = (Position) o;
+        return this.x == that.x
+                && this.y == that.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return x + "," + y;
     }
 }
