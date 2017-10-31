@@ -1,24 +1,73 @@
 package dk.cngroup.university;
 
 public enum Direction {
-    NORTH(WorldSide.EAST, WorldSide.WEST),
-    EAST(WorldSide.SOUTH, WorldSide.NORTH),
-    SOUTH(WorldSide.WEST, WorldSide.EAST),
-    WEST(WorldSide.NORTH, WorldSide.SOUTH);
 
-    private WorldSide rightOf;
-    private WorldSide leftOf;
+    NORTH("N") {
+        @Override
+        public Direction getLeft() {
+            return WEST;
+        }
 
-    Direction(WorldSide rightOf, WorldSide leftOf) {
-        this.rightOf = rightOf;
-        this.leftOf = leftOf;
+        @Override
+        public Direction getRight() {
+            return EAST;
+        }
+    },
+
+    EAST("E") {
+        @Override
+        public Direction getLeft() {
+            return NORTH;
+        }
+
+        @Override
+        public Direction getRight() {
+            return SOUTH;
+        }
+    },
+
+    SOUTH("S") {
+        @Override
+        public Direction getLeft() {
+            return EAST;
+        }
+
+        @Override
+        public Direction getRight() {
+            return WEST;
+        }
+    },
+
+    WEST("W") {
+        @Override
+        public Direction getLeft() {
+            return SOUTH;
+        }
+
+        @Override
+        public Direction getRight() {
+            return NORTH;
+        }
+    };
+
+    // Using abstract methods allows forwards references between the enum values
+
+    public abstract Direction getLeft();
+
+    public abstract Direction getRight();
+
+    private final String symbol;
+
+    Direction(String symbol) {
+        this.symbol = symbol;
     }
 
-    public Direction getRightOf() {
-        return DirectionFactory.getDirection(rightOf);
-    }
-
-    public Direction getLeftOf() {
-        return DirectionFactory.getDirection(leftOf);
+    public static Direction parse(String symbol) {
+        for (Direction direction : values()) {
+            if (direction.symbol.equals(symbol)) {
+                return direction;
+            }
+        }
+        throw new IllegalArgumentException("no direction exists for symbol: " + symbol);
     }
 }
