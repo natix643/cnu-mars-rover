@@ -8,52 +8,51 @@ import static dk.cngroup.university.Field.INACCESSIBLE
 
 class LandscapeTest extends Specification {
 
-    def static Field[][] testLandscape = [
+    static Field[][] ALL_ACCESSIBLE_FIELDS = [
             [ACCESSIBLE, ACCESSIBLE, ACCESSIBLE],
             [ACCESSIBLE, ACCESSIBLE, ACCESSIBLE],
             [ACCESSIBLE, ACCESSIBLE, ACCESSIBLE]
     ]
 
-    @Unroll
-    "should create landscape"() {
+    def "should generate landscape"() {
         given:
-        RandomFieldGenerator generator = Mock(RandomFieldGenerator)
+        def generator = Mock(FieldGenerator)
         9 * generator.getRandomField() >> ACCESSIBLE
 
-        Landscape landscape = new Landscape(generator, 3)
-
-        expect:
-        landscape.getLandscape() == testLandscape
-
-    }
-
-
-    void "should print to string"() {
-        given:
-        RandomFieldGenerator generator = Mock(RandomFieldGenerator)
-        generator.getRandomField() >>> [INACCESSIBLE, INACCESSIBLE, ACCESSIBLE]
-
-        Landscape landscape = new Landscape(generator, 3)
-
         when:
-        String result = landscape.toString();
+        def landscape = new Landscape(generator, 3)
 
         then:
-        result == """00.
-...
-...
-"""
+        landscape.getFields() == ALL_ACCESSIBLE_FIELDS
+    }
+
+    def "should print to string"() {
+        given:
+        def generator = Mock(FieldGenerator)
+        generator.getRandomField() >>> [INACCESSIBLE, INACCESSIBLE, ACCESSIBLE]
+
+        def landscape = new Landscape(generator, 3)
+
+        when:
+        String result = landscape.toString()
+
+        then:
+        result == """
+            |00.
+            |...
+            |...
+        """.stripMargin('|').trim() // removes first and last line breaks and everything to left of '|'
     }
 
     @Unroll
     "should return #isAccessible for #x:#y"(boolean isAccessible, int x, int y) {
         given:
-        RandomFieldGenerator generator = Mock(RandomFieldGenerator)
+        FieldGenerator generator = Mock(FieldGenerator)
         generator.getRandomField() >>> [INACCESSIBLE, INACCESSIBLE, ACCESSIBLE]
 
         Landscape landscape = new Landscape(generator, 3)
 
-        def position = new RoverPosition(x, y)
+        def position = new Position(x, y)
 
         expect:
         isAccessible == landscape.isFieldAccessible(position)

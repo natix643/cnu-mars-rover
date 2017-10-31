@@ -2,49 +2,51 @@ package dk.cngroup.university;
 
 public class Landscape {
 
-    private Field[][] landscape;
+    private final Field[][] fields;
 
-    public Landscape(Field[][] landscape) {
-        this.landscape = landscape;
+    public Landscape(Field[][] fields) {
+        this.fields = fields;
     }
 
-    public Landscape(RandomFieldGenerator generator, int squareSize) {
-        this.landscape = createLandscape(generator, squareSize);
+    public Landscape(FieldGenerator generator, int squareSize) {
+        this.fields = generateFields(generator, squareSize);
     }
 
-    private Field[][] createLandscape(RandomFieldGenerator generator, int squareSize) {
-        Field[][] landscape = new Field[squareSize][squareSize];
+    private Field[][] generateFields(FieldGenerator generator, int squareSize) {
+        Field[][] fields = new Field[squareSize][squareSize];
         for (int i = 0; i < squareSize; i++) {
             for (int j = 0; j < squareSize; j++) {
-                landscape[i][j] = generator.getRandomField();
+                fields[i][j] = generator.getRandomField();
             }
         }
-        return landscape;
+        return fields;
     }
 
-    public Field[][] getLandscape() {
-        return landscape;
+    public Field[][] getFields() {
+        return fields;
+    }
+
+    public boolean isFieldAccessible(Position pos) {
+        if (!pos.isInsideLandscape(fields.length)) {
+            return false;
+        }
+
+        Field field = fields[pos.getX()][pos.getY()];
+        return field == Field.ACCESSIBLE;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Field[] row : landscape) {
+        for (int i = 0; i < fields.length; i++) {
+            Field[] row = fields[i];
             for (Field field : row) {
                 sb.append(field);
             }
-            sb.append("\n");
+            if (i < fields.length - 1) {
+                sb.append("\n");
+            }
         }
-
         return sb.toString();
-    }
-
-    public boolean isFieldAccessible(RoverPosition pos) {
-        if (!pos.isInsideLandscape(landscape.length)) {
-            return false;
-        }
-
-        Field field = landscape[pos.getX()][pos.getY()];
-        return field == Field.ACCESSIBLE;
     }
 }
