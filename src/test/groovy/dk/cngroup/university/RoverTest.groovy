@@ -3,68 +3,34 @@ package dk.cngroup.university
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static dk.cngroup.university.Direction.*
+import static dk.cngroup.university.Direction.NORTH
 
 class RoverTest extends Specification {
 
-    @Unroll
-    "should return correct direction to WEST"() {
-        when:
-        def rover = new Rover(WEST)
-        then:
-        rover.getDirection() == WEST
-    }
-
-    @Unroll
-    "should return correct direction to NORTH"() {
-        when:
-        def rover = new Rover(NORTH)
-        then:
-        rover.getDirection() == NORTH
-    }
-
-    @Unroll
-    "should return default direction"() {
-        when:
-        def rover = new Rover()
-        then:
-        rover.getDirection() == NORTH
-    }
-
-    @Unroll
-    "should turn left from #oldDirection to #newDirection"(Direction oldDirection, Direction newDirection) {
+    def "should return given position and direction"() {
         given:
-        def rover = new Rover(oldDirection)
+        def position = new Position(1, 2)
+        def direction = NORTH
 
-        expect:
-        newDirection == rover
-                .turnLeft()
-                .getDirection()
+        when:
+        def rover = new Rover(position, direction)
+
+        then:
+        rover.getDirection() == direction
+        rover.getPosition() == position
+    }
+
+    @Unroll
+    "should reject null #nullProperty"() {
+        when:
+        new Rover(position, direction)
+
+        then:
+        thrown(NullPointerException)
 
         where:
-        oldDirection | newDirection
-        NORTH        | WEST
-        WEST         | SOUTH
-        SOUTH        | EAST
-        EAST         | NORTH
+        nullProperty | position           | direction
+        'position'   | null               | NORTH
+        'direction'  | new Position(0, 0) | null
     }
-
-    @Unroll
-    "should turn right from #oldDirection to #newDirection"(Direction oldDirection, Direction newDirection) {
-        given:
-        def rover = new Rover(oldDirection)
-
-        expect:
-        newDirection == rover
-                .turnRight()
-                .getDirection()
-
-        where:
-        oldDirection | newDirection
-        NORTH        | EAST
-        WEST         | NORTH
-        SOUTH        | WEST
-        EAST         | SOUTH
-    }
-
 }

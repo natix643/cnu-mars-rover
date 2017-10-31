@@ -1,25 +1,21 @@
 package dk.cngroup.university;
 
-public class Rover {
-    private Direction direction;
+import static java.util.Objects.requireNonNull;
 
-    public Rover() {
-        this.direction = Direction.NORTH;
+public class Rover {
+    private final Position position;
+    private final Direction direction;
+
+    public Rover(Position position, Direction direction) {
+        this.position = requireNonNull(position);
+        this.direction = requireNonNull(direction);
     }
 
-    public Rover(Direction direction) {
-        this.direction = direction;
+    public Position getPosition() {
+        return position;
     }
 
     public Direction getDirection() {
         return direction;
-    }
-
-    public Rover turnLeft() {
-        return new Rover(direction.getLeftOf());
-    }
-
-    public Rover turnRight() {
-        return new Rover(direction.getRightOf());
     }
 }
