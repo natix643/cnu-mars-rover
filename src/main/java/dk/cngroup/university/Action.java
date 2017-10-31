@@ -1,10 +1,35 @@
 package dk.cngroup.university;
 
 public enum Action {
-    LEFT("L"),
-    RIGHT("R"),
-    FORWARD("F"),
-    BACKWARD("B");
+    LEFT("L") {
+        @Override
+        public Rover updateRover(Rover rover, Landscape landscape) {
+            return new Rover(rover.getPosition(), rover.getDirection().getLeft());
+        }
+    },
+
+    RIGHT("R") {
+        @Override
+        public Rover updateRover(Rover rover, Landscape landscape) {
+            return new Rover(rover.getPosition(), rover.getDirection().getRight());
+        }
+    },
+
+    FORWARD("F") {
+        @Override
+        public Rover updateRover(Rover rover, Landscape landscape) {
+            throw new UnsupportedOperationException();
+        }
+    },
+
+    BACKWARD("B") {
+        @Override
+        public Rover updateRover(Rover rover, Landscape landscape) {
+            throw new UnsupportedOperationException();
+        }
+    };
+
+    public abstract Rover updateRover(Rover rover, Landscape landscape);
 
     private final String symbol;
 
