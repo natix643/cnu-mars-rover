@@ -9,7 +9,7 @@ import static dk.cngroup.university.Field.INACCESSIBLE
 
 class InputTest extends Specification {
 
-    def EXAMPLE_LINES = [
+    static EXAMPLE_LINES = [
             '1,0',
             '',
             'N',
