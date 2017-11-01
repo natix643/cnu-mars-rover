@@ -12,5 +12,6 @@ class SolverTest extends Specification {
         solver.isInitialPositionValid()
         solver.isTargetPositionValid()
         solver.getFinalPosition() == new Position(4, 0)
+        solver.getFoundObstacles() == (Set) [new Position(2, 1)]
     }
 }

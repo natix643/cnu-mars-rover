@@ -33,5 +33,10 @@ public class Main {
         } else {
             out.println("rover has missed the target and ended at: " + finalPosition);
         }
+
+        out.println("obstacles found along the way:");
+        for (Position obstacle : solver.getFoundObstacles()) {
+            out.println("\t" + obstacle);
+        }
     }
 }
