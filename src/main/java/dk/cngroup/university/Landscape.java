@@ -1,13 +1,14 @@
 package dk.cngroup.university;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Landscape {
 
     private final Field[][] fields;
 
     public Landscape(Field[][] fields) {
-        this.fields = fields;
+        this.fields = Objects.requireNonNull(fields);
     }
 
     public Landscape(FieldGenerator generator, int squareSize) {
@@ -28,13 +29,21 @@ public class Landscape {
         return fields;
     }
 
-    public boolean isFieldAccessible(Position pos) {
-        if (!pos.isInsideLandscape(fields.length)) {
-            return false;
+    /**
+     * @return field at given position, if inside this landscape; null if it's outside
+     */
+    public Field getField(Position position) {
+        int x = position.getX();
+        int y = position.getY();
+
+        if (x >= 0 && x < fields.length) {
+            Field[] row = fields[x];
+            if (y >= 0 && y < row.length) {
+                return row[y];
+            }
         }
 
-        Field field = fields[pos.getX()][pos.getY()];
-        return field == Field.ACCESSIBLE;
+        return null;
     }
 
     @Override

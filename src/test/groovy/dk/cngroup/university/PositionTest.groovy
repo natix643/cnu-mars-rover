@@ -3,6 +3,8 @@ package dk.cngroup.university
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static dk.cngroup.university.Direction.*
+
 class PositionTest extends Specification {
 
     @Unroll
@@ -37,5 +39,21 @@ class PositionTest extends Specification {
                 'a,2',
                 '1,2,3'
         ]
+    }
+
+    @Unroll
+    "should return neighbor in #direction"() {
+        given:
+        def position = new Position(0, 0)
+
+        expect:
+        position.getNeighbor(direction) == neighbor
+
+        where:
+        direction | neighbor
+        NORTH     | new Position(-1, 0)
+        EAST      | new Position(0, 1)
+        SOUTH     | new Position(1, 0)
+        WEST      | new Position(0, -1)
     }
 }

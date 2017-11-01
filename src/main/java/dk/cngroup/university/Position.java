@@ -31,20 +31,19 @@ public class Position {
         );
     }
 
-    public boolean isInsideLandscape(int landscapeWidth) {
-        if (this.getX() < 0
-                || this.getY() < 0) {
-            return false;
+    public Position getNeighbor(Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return new Position(x - 1, y);
+            case EAST:
+                return new Position(x, y + 1);
+            case SOUTH:
+                return new Position(x + 1, y);
+            case WEST:
+                return new Position(x, y - 1);
+            default:
+                throw new IllegalArgumentException("invalid direction:" + direction);
         }
-
-        if (this.getX() >= landscapeWidth) {
-            return false;
-        }
-        if (this.getY() >= landscapeWidth) {
-            return false;
-        }
-
-        return true;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package dk.cngroup.university;
 
+import static dk.cngroup.university.Field.ACCESSIBLE;
+
 public enum Action {
+
     LEFT("L") {
         @Override
         public Rover updateRover(Rover rover, Landscape landscape) {
@@ -18,14 +21,27 @@ public enum Action {
     FORWARD("F") {
         @Override
         public Rover updateRover(Rover rover, Landscape landscape) {
-            throw new UnsupportedOperationException();
+            Position newPosition = rover.getPosition().getNeighbor(rover.getDirection());
+
+            if (landscape.getField(newPosition) == ACCESSIBLE) {
+                return new Rover(newPosition, rover.getDirection());
+            } else {
+                return rover;
+            }
         }
     },
 
     BACKWARD("B") {
         @Override
         public Rover updateRover(Rover rover, Landscape landscape) {
-            throw new UnsupportedOperationException();
+            Direction oppositeDirection = rover.getDirection().getRight().getRight();
+            Position newPosition = rover.getPosition().getNeighbor(oppositeDirection);
+
+            if (landscape.getField(newPosition) == ACCESSIBLE) {
+                return new Rover(newPosition, rover.getDirection());
+            } else {
+                return rover;
+            }
         }
     };
 

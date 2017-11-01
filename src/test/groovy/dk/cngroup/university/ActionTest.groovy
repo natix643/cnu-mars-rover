@@ -5,6 +5,8 @@ import spock.lang.Unroll
 
 import static dk.cngroup.university.Action.*
 import static dk.cngroup.university.Direction.*
+import static dk.cngroup.university.Field.ACCESSIBLE
+import static dk.cngroup.university.Field.INACCESSIBLE
 
 class ActionTest extends Specification {
 
@@ -74,5 +76,55 @@ class ActionTest extends Specification {
         EAST         | SOUTH
         SOUTH        | WEST
         WEST         | NORTH
+    }
+
+    @Unroll
+    "FORWARD should move to accessible neighbor in #direction"() {
+        given:
+        def oldRover = new Rover(new Position(0, 0), direction)
+
+        def landscape = new Landscape([
+                [ACCESSIBLE, ACCESSIBLE],
+                [INACCESSIBLE, ACCESSIBLE],
+        ] as Field[][])
+
+        when:
+        def newRover = FORWARD.updateRover(oldRover, landscape)
+
+        then:
+        newRover.getDirection() == oldRover.getDirection()
+        newRover.getPosition() == newPosition
+
+        where:
+        direction | newPosition
+        NORTH     | new Position(0, 0)
+        EAST      | new Position(0, 1)
+        SOUTH     | new Position(0, 0)
+        WEST      | new Position(0, 0)
+    }
+
+    @Unroll
+    "BACKWARD should move to accessible neighbor in #direction"() {
+        given:
+        def oldRover = new Rover(new Position(0, 0), direction)
+
+        def landscape = new Landscape([
+                [ACCESSIBLE, ACCESSIBLE],
+                [INACCESSIBLE, ACCESSIBLE],
+        ] as Field[][])
+
+        when:
+        def newRover = BACKWARD.updateRover(oldRover, landscape)
+
+        then:
+        newRover.getDirection() == oldRover.getDirection()
+        newRover.getPosition() == newPosition
+
+        where:
+        direction | newPosition
+        NORTH     | new Position(0, 0)
+        EAST      | new Position(0, 0)
+        SOUTH     | new Position(0, 0)
+        WEST      | new Position(0, 1)
     }
 }

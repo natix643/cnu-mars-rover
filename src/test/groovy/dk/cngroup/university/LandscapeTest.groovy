@@ -14,7 +14,7 @@ class LandscapeTest extends Specification {
             [ACCESSIBLE, ACCESSIBLE, ACCESSIBLE]
     ]
 
-    def "should generate landscape"() {
+    def "should generate fields"() {
         given:
         def generator = Mock(FieldGenerator)
         9 * generator.getRandomField() >> ACCESSIBLE
@@ -45,26 +45,17 @@ class LandscapeTest extends Specification {
     }
 
     @Unroll
-    "should return #isAccessible for #x:#y"(boolean isAccessible, int x, int y) {
+    "should return field for (#position)"() {
         given:
-        FieldGenerator generator = Mock(FieldGenerator)
-        generator.getRandomField() >>> [INACCESSIBLE, INACCESSIBLE, ACCESSIBLE]
-
-        Landscape landscape = new Landscape(generator, 3)
-
-        def position = new Position(x, y)
+        def landscape = new Landscape([[ACCESSIBLE, INACCESSIBLE]] as Field[][])
 
         expect:
-        isAccessible == landscape.isFieldAccessible(position)
+        landscape.getField(position) == field
 
         where:
-        isAccessible | x  | y
-        false        | 0  | 0
-        false        | 0  | 1
-        true         | 0  | 2
-        true         | 1  | 0
-        false        | 3  | 3
-        false        | -1 | -2
+        position           | field
+        new Position(0, 0) | ACCESSIBLE
+        new Position(0, 1) | INACCESSIBLE
+        new Position(0, 2) | null
     }
-
 }
